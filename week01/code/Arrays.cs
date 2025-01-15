@@ -22,35 +22,40 @@ public static class Arrays
     }
 }
 
-   
- public class Lists
+public class Lists
 {
     // Function to rotate a list to the right by a specified amount
     public static List<int> RotateListRight(List<int> data, int amount)
     {
         // Step 1: Validate inputs
+        // Check if the list is null or empty. If so, no rotation is possible.
         if (data == null || data.Count == 0)
         {
             throw new ArgumentException("Data list cannot be null or empty.");
         }
 
-        if (amount < 1 || amount > data.Count)
-        {
-            throw new ArgumentException("Amount must be between 1 and the size of the list.");
-        }
-
         // Step 2: Normalize the rotation amount
+        // If the rotation amount is greater than the size of the list, use modulo to avoid unnecessary rotations.
         amount = amount % data.Count;
 
-        // Step 3: Split the list
-        // The rotated part (last `amount` elements) and the remaining part
+        // If the rotation amount is 0, return a new copy of the list since no rotation is needed.
+        if (amount == 0)
+        {
+            return new List<int>(data); // Copy the list to avoid modifying the original.
+        }
+
+        // Step 3: Split the list into two parts
+        // The first part will be the last `amount` elements from the list (this will come to the front).
         List<int> rotatedPart = data.GetRange(data.Count - amount, amount);
+
+        // The second part will be the remaining elements (everything except the last `amount`).
         List<int> remainingPart = data.GetRange(0, data.Count - amount);
 
-        // Step 4: Combine the rotated part and the remaining part
+        // Step 4: Combine the two parts
+        // Append the remaining part after the rotated part to get the rotated list.
         rotatedPart.AddRange(remainingPart);
 
-        // Step 5: Return the result
+        // Step 5: Return the rotated list
         return rotatedPart;
     }
 }
