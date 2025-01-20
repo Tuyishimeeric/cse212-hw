@@ -1,61 +1,33 @@
 public static class Arrays
 {
- public static double[] MultiplesOf(double startingNumber, int numberOfMultiples)
+    /// <summary>
+    /// This function will produce an array of size 'length' starting with 'number' followed by multiples of 'number'.  For 
+    /// example, MultiplesOf(7, 5) will result in: {7, 14, 21, 28, 35}.  Assume that length is a positive
+    /// integer greater than 0.
+    /// </summary>
+    /// <returns>array of doubles that are the multiples of the supplied number</returns>
+    public static double[] MultiplesOf(double number, int length)
     {
-        // Step 1: Validate inputs
-        if (numberOfMultiples <= 0)
-        {
-            throw new ArgumentException("Number of multiples must be greater than 0.");
-        }
+        // TODO Problem 1 Start
+        // Remember: Using comments in your program, write down your process for solving this problem
+        // step by step before you write the code. The plan should be clear enough that it could
+        // be implemented by another person.
 
-        // Step 2: Initialize the result array
-        double[] multiples = new double[numberOfMultiples];
-
-        // Step 3: Calculate each multiple
-        for (int i = 0; i < numberOfMultiples; i++)
-        {
-            // The ith multiple is startingNumber * (i + 1)
-            multiples[i] = startingNumber * (i + 1);
-        }
-        //step4: return the result array
-        return multiples;
+        return []; // replace this return statement with your own
     }
-}
 
-public class Lists
-{
-    // Function to rotate a list to the right by a specified amount
-    public static List<int> RotateListRight(List<int> data, int amount)
+    /// <summary>
+    /// Rotate the 'data' to the right by the 'amount'.  For example, if the data is 
+    /// List<int>{1, 2, 3, 4, 5, 6, 7, 8, 9} and an amount is 3 then the list after the function runs should be 
+    /// List<int>{7, 8, 9, 1, 2, 3, 4, 5, 6}.  The value of amount will be in the range of 1 to data.Count, inclusive.
+    ///
+    /// Because a list is dynamic, this function will modify the existing data list rather than returning a new list.
+    /// </summary>
+    public static void RotateListRight(List<int> data, int amount)
     {
-        // Step 1: Validate inputs
-        // Check if the list is null or empty. If so, no rotation is possible.
-        if (data == null || data.Count == 0)
-        {
-            throw new ArgumentException("Data list cannot be null or empty.");
-        }
-
-        // Step 2: Normalize the rotation amount
-        // If the rotation amount is greater than the size of the list, use modulo to avoid unnecessary rotations.
-        amount = amount % data.Count;
-
-        // If the rotation amount is 0, return a new copy of the list since no rotation is needed.
-        if (amount == 0)
-        {
-            return new List<int>(data); // Copy the list to avoid modifying the original.
-        }
-
-        // Step 3: Split the list into two parts
-        // The first part will be the last `amount` elements from the list (this will come to the front).
-        List<int> rotatedPart = data.GetRange(data.Count - amount, amount);
-
-        // The second part will be the remaining elements (everything except the last `amount`).
-        List<int> remainingPart = data.GetRange(0, data.Count - amount);
-
-        // Step 4: Combine the two parts
-        // Append the remaining part after the rotated part to get the rotated list.
-        rotatedPart.AddRange(remainingPart);
-
-        // Step 5: Return the rotated list
-        return rotatedPart;
+        // TODO Problem 2 Start
+        // Remember: Using comments in your program, write down your process for solving this problem
+        // step by step before you write the code. The plan should be clear enough that it could
+        // be implemented by another person.
     }
 }

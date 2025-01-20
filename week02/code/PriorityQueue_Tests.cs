@@ -5,25 +5,44 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 [TestClass]
 public class PriorityQueueTests
 {
-    [TestMethod]
-    // Scenario: 
-    // Expected Result: 
-    // Defect(s) Found: 
-    public void TestPriorityQueue_1()
-    {
-        var priorityQueue = new PriorityQueue();
-        Assert.Fail("Implement the test case and then remove this.");
-    }
+[TestMethod]
+public void TestPriorityQueue_1()
+{
+    // Arrange
+    var queue = new PriorityQueue();  // Non-generic class
 
-    [TestMethod]
-    // Scenario: 
-    // Expected Result: 
-    // Defect(s) Found: 
-    public void TestPriorityQueue_2()
-    {
-        var priorityQueue = new PriorityQueue();
-        Assert.Fail("Implement the test case and then remove this.");
-    }
+    // Enqueue some items with priorities
+    queue.Enqueue(10, 1);  // Low priority
+    queue.Enqueue(20, 10); // High priority
 
-    // Add more test cases as needed below.
+    // Act
+    var first = queue.Dequeue();  // This should return 20
+    var second = queue.Dequeue(); // This should return 10
+
+    // Assert
+    Assert.AreEqual(20, first);
+    Assert.AreEqual(10, second);
+}
+
+[TestMethod]
+public void TestPriorityQueue_2()
+{
+    // Arrange
+    var queue = new PriorityQueue();  // Non-generic class
+
+    // Enqueue items with different priorities
+    queue.Enqueue("Low", 1);
+    queue.Enqueue("High", 10);
+    queue.Enqueue("Medium", 5);
+
+    // Act
+    var highestPriority = queue.Dequeue();  // "High"
+    var mediumPriority = queue.Dequeue();   // "Medium"
+    var lowestPriority = queue.Dequeue();   // "Low"
+
+    // Assert
+    Assert.AreEqual("High", highestPriority);
+    Assert.AreEqual("Medium", mediumPriority);
+    Assert.AreEqual("Low", lowestPriority);
+}
 }
