@@ -78,20 +78,31 @@ public static class SetsAndMaps
 
         try
         {
+            // Make the HTTP request and retrieve the JSON string
             using var client = new HttpClient();
-            using var getRequestMessage = new HttpRequestMessage(HttpMethod.Get, uri);
-            using var jsonStream = client.Send(getRequestMessage).Content.ReadAsStream();
-            using var reader = new StreamReader(jsonStream);
-
-            var json = reader.ReadToEnd();
+            var json = client.GetStringAsync(uri).Result;
 
             var options = new JsonSerializerOptions { PropertyNameCaseInsensitive = true };
             var featureCollection = JsonSerializer.Deserialize<FeatureCollection>(json, options);
 
+            // Filter and format the earthquake data
             var result = featureCollection.Features
-                .Where(f => f.Properties.Place != null && f.Properties.Mag >= 0)
-                .Select(f => $"{f.Properties.Place} - Magnitude: {f.Properties.Mag}")
+                .Where(f => f.Properties.Place != null && f.Properties.Mag.HasValue)
+                .Select(f => $"{f.Properties.Place} - Mag {f.Properties.Mag}")
                 .ToArray();
+
+            // Debugging: Log the result length and first few results for validation
+            Console.WriteLine($"Total earthquakes found: {result.Length}");
+            for (int i = 0; i < Math.Min(result.Length, 5); i++)
+            {
+                Console.WriteLine($"Earthquake {i + 1}: {result[i]}");
+            }
+
+            // Ensure there are at least 5 results
+            if (result.Length < 5)
+            {
+                throw new InvalidOperationException("Not enough earthquakes returned.");
+            }
 
             return result;
         }
@@ -100,5 +111,22 @@ public static class SetsAndMaps
             Console.WriteLine($"Error fetching earthquake data: {ex.Message}");
             return Array.Empty<string>();  // Return an empty array if an error occurs
         }
+    }
+
+    // Classes for deserializing the JSON response
+    public class FeatureCollection
+    {
+        public Feature[] Features { get; set; }
+    }
+
+    public class Feature
+    {
+        public FeatureProperties Properties { get; set; }
+    }
+
+    public class FeatureProperties
+    {
+        public string Place { get; set; }
+        public double? Mag { get; set; }
     }
 }
