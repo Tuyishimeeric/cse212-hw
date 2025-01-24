@@ -31,87 +31,73 @@ public class Maze
     /// can't move, throw an InvalidOperationException with the message "Can't go that way!".
     /// </summary>
 
-    public void MoveLeft()
+   public void MoveLeft()
     {
-        if (_mazeMap.ContainsKey((_currX, _currY)))
+        if (CanMove(0)) // Check if left (index 0) is valid
         {
-            var directions = _mazeMap[(_currX, _currY)];
-
-            // Check if moving left (directions[3]) is possible (true means you can move)
-            if (directions[3])
-            {
-                _currX--;  // Move left by decreasing the X coordinate
-            }
-            else
-            {
-                throw new InvalidOperationException("Can't go that way!");
-            }
+            _currX--; // Move left
+        }
+        else
+        {
+            throw new InvalidOperationException("Can't go that way!");
         }
     }
 
-    /// <summary>
-    /// Check to see if you can move right. If you can, then move. If you can't move, throw an InvalidOperationException with the message "Can't go that way!".
-    /// </summary>
+    // Move Right
     public void MoveRight()
     {
-        if (_mazeMap.ContainsKey((_currX, _currY)))
+        if (CanMove(1)) // Check if right (index 1) is valid
         {
-            var directions = _mazeMap[(_currX, _currY)];
-
-            // Check if moving right (directions[1]) is possible (true means you can move)
-            if (directions[1])
-            {
-                _currX++;  // Move right by increasing the X coordinate
-            }
-            else
-            {
-                throw new InvalidOperationException("Can't go that way!");
-            }
+            _currX++; // Move right
+        }
+        else
+        {
+            throw new InvalidOperationException("Can't go that way!");
         }
     }
 
-    /// <summary>
-    /// Check to see if you can move up. If you can, then move. If you can't move, throw an InvalidOperationException with the message "Can't go that way!".
-    /// </summary>
+    // Move Up
     public void MoveUp()
     {
-        if (_mazeMap.ContainsKey((_currX, _currY)))
+        if (CanMove(2)) // Check if up (index 2) is valid
         {
-            var directions = _mazeMap[(_currX, _currY)];
-
-            // Check if moving up (directions[0]) is possible (true means you can move)
-            if (directions[0])
-            {
-                _currY--;  // Move up by decreasing the Y coordinate
-            }
-            else
-            {
-                throw new InvalidOperationException("Can't go that way!");
-            }
+            _currY--; // Move up
+        }
+        else
+        {
+            throw new InvalidOperationException("Can't go that way!");
         }
     }
 
-    /// <summary>
-    /// Check to see if you can move down. If you can, then move. If you can't move, throw an InvalidOperationException with the message "Can't go that way!".
-    /// </summary>
+    // Move Down
     public void MoveDown()
     {
-        if (_mazeMap.ContainsKey((_currX, _currY)))
+        if (CanMove(3)) // Check if down (index 3) is valid
         {
-            var directions = _mazeMap[(_currX, _currY)];
-
-            // Check if moving down (directions[2]) is possible (true means you can move)
-            if (directions[2])
-            {
-                _currY++;  // Move down by increasing the Y coordinate
-            }
-            else
-            {
-                throw new InvalidOperationException("Can't go that way!");
-            }
+            _currY++; // Move down
+        }
+        else
+        {
+            throw new InvalidOperationException("Can't go that way!");
         }
     }
 
+    // Check if a move is valid in a given direction (index)
+    private bool CanMove(int directionIndex)
+    {
+        bool canMove = false;
+
+        // Check if current position is in the maze map
+        if (_mazeMap.ContainsKey((_currX, _currY)))
+        {
+            // Check if the direction is valid (true means movement is allowed)
+            canMove = _mazeMap[(_currX, _currY)][directionIndex];
+        }
+
+        return canMove;
+    }
+
+    // Return the current status of the position
     public string GetStatus()
     {
         return $"Current location (x={_currX}, y={_currY})";
